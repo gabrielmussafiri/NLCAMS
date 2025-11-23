@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NLC / SA Red Cross Air Mercy Services Trust - Disaster Relief Assessment Form</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <div class="logo-container">
+                    <img src="AMS.png" alt="AMS Logo" class="ams-logo">
+                </div>
+                <div class="header-text">
+                    <div>
+                        <div class="form-title">NLC|SA Red Cross Air Mercy Services Trust (AMS)</div>
+                        <div class="form-subtitle">Disaster Relief Project – Assessment Form</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-content">
+            <div class="success-message" id="successMessage" style="display: none;">
+                Form submitted successfully! Data has been saved.
+            </div>
+
+            <form id="assessmentForm">
+                <!-- Section 1: Basic Information -->
+                <div class="section">
+                    <h2 class="section-title">
+                        <span class="section-number">1</span>
+                        Basic Information
+                    </h2>
+                
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="assessmentDate">Date of Assessment *</label>
+                            <input type="date" id="assessmentDate" name="assessmentDate" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="assessorName">Name of Assessor *</label>
+                            <input type="text" id="assessorName" name="assessorName" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="provinceDistrict">Province / District *</label>
+                            <input type="text" id="provinceDistrict" name="provinceDistrict" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="locationCommunity">Location / Community *</label>
+                            <input type="text" id="locationCommunity" name="locationCommunity" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gpsCoordinates">GPS Coordinates (if available)</label>
+                        <input type="text" id="gpsCoordinates" name="gpsCoordinates" placeholder="e.g., -33.9249, 18.4241">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Assessment Type *</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="radio" id="typeInitial" name="assessmentType" value="Initial" required>
+                                <label for="typeInitial">Initial</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="radio" id="typeFollowup" name="assessmentType" value="Follow-up">
+                                <label for="typeFollowup">Follow-up</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="radio" id="typeFinal" name="assessmentType" value="Final">
+                                <label for="typeFinal">Final</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2: Disaster Details -->
+                <div class="section">
+                    <h2 class="section-title">
+                        <span class="section-number">2</span>
+                        Disaster Details
+                    </h2>
+                    
+                    <div class="form-group">
+                        <label>Type of Disaster *</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="disFlood" name="disasterType" value="Flood">
+                                <label for="disFlood">Flood</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="disFire" name="disasterType" value="Fire">
+                                <label for="disFire">Fire</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="disDrought" name="disasterType" value="Drought">
+                                <label for="disDrought">Drought</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="disStorm" name="disasterType" value="Storm/Wind">
+                                <label for="disStorm">Storm/Wind</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="disEpidemic" name="disasterType" value="Epidemic">
+                                <label for="disEpidemic">Epidemic</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="disasterOther">Other (specify)</label>
+                        <input type="text" id="disasterOther" name="disasterOther">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="occurrenceDateTime">Date / Time of Occurrence *</label>
+                        <input type="datetime-local" id="occurrenceDateTime" name="occurrenceDateTime" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="incidentDescription">Brief Description of Incident *</label>
+                        <textarea id="incidentDescription" name="incidentDescription" required></textarea>
+                    </div>
+                </div>
+
+                <!-- Section 3: Population Affected -->
+                <div class="section">
+                    <h2 class="section-title">
+                        <span class="section-number">3</span>
+                        Population Affected
+                    </h2>
+                    
+                    <table class="table-input">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Number</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Total households affected</td>
+                                <td><input type="number" name="householdsAffected" min="0"></td>
+                            </tr>
+                            <tr>
+                                <td>Total individuals affected</td>
+                                <td><input type="number" name="individualsAffected" min="0"></td>
+                            </tr>
+                            <tr>
+                                <td>Children (&lt;18 yrs)</td>
+                                <td><input type="number" name="childrenAffected" min="0"></td>
+                            </tr>
+                            <tr>
+                                <td>Elderly (&gt;60 yrs)</td>
+                                <td><input type="number" name="elderlyAffected" min="0"></td>
+                            </tr>
+                            <tr>
+                                <td>Persons with disabilities</td>
+                                <td><input type="number" name="disabledAffected" min="0"></td>
+                            </tr>
+                            <tr>
+                                <td>Pregnant / Lactating women</td>
+                                <td><input type="number" name="pregnantLactatingAffected" min="0"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3 style="margin-top: 25px; margin-bottom: 15px; color: #333;">Casualties / Injuries</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="injured">Injured</label>
+                            <input type="number" id="injured" name="injured" min="0" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="fatalities">Fatalities</label>
+                            <input type="number" id="fatalities" name="fatalities" min="0" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="missing">Missing</label>
+                            <input type="number" id="missing" name="missing" min="0" value="0">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 4: Damage Assessment -->
+                <div class="section">
+                    <h2 class="section-title">
+                        <span class="section-number">4</span>
+                        Damage Assessment
+                    </h2>
+                    
+                    <h3 style="margin-bottom: 15px; color: #333;">Shelter / Housing</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="totallyDestroyed">Totally destroyed - Number</label>
+                            <input type="number" id="totallyDestroyed" name="totallyDestroyed" min="0" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="partiallyDamaged">Partially damaged - Number</label>
+                            <input type="number" id="partiallyDamaged" name="partiallyDamaged" min="0" value="0">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Infrastructure affected</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="infraRoads" name="infrastructure" value="Roads">
+                                <label for="infraRoads">Roads</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="infraBridges" name="infrastructure" value="Bridges">
+                                <label for="infraBridges">Bridges</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="infraSchools" name="infrastructure" value="Schools">
+                                <label for="infraSchools">Schools</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="infraClinics" name="infrastructure" value="Clinics">
+                                <label for="infraClinics">Clinics</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="infraWater" name="infrastructure" value="Water systems">
+                                <label for="infraWater">Water systems</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="infraElectricity" name="infrastructure" value="Electricity">
+                                <label for="infraElectricity">Electricity</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="infraComm" name="infrastructure" value="Communication">
+                                <label for="infraComm">Communication</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="infrastructureDetails">Infrastructure details</label>
+                        <textarea id="infrastructureDetails" name="infrastructureDetails"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="livelihoodImpact">Livelihood impact (farms, livestock, employment, businesses)</label>
+                        <textarea id="livelihoodImpact" name="livelihoodImpact"></textarea>
+                    </div>
+                </div>
+
+                <!-- Section 5: Immediate Needs -->
+                <div class="section">
+                    <h2 class="section-title">
+                        <span class="section-number">5</span>
+                        Immediate Needs Identified
+                    </h2>
+                    
+                    <div class="form-group">
+                        <label>Priority Needs (tick all applicable)</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="needFood" name="priorityNeeds" value="Food parcels">
+                                <label for="needFood">Food parcels</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="needWater" name="priorityNeeds" value="Potable water">
+                                <label for="needWater">Potable water</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="needClothing" name="priorityNeeds" value="Clothing / Blankets">
+                                <label for="needClothing">Clothing / Blankets</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="needHygiene" name="priorityNeeds" value="Hygiene kits">
+                                <label for="needHygiene">Hygiene kits</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="needShelter" name="priorityNeeds" value="Temporary shelter">
+                                <label for="needShelter">Temporary shelter</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="needMedical" name="priorityNeeds" value="Medical support">
+                                <label for="needMedical">Medical support</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="needPsycho" name="priorityNeeds" value="Psychosocial support">
+                                <label for="needPsycho">Psychosocial support</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="needSearch" name="priorityNeeds" value="Search & rescue">
+                                <label for="needSearch">Search & rescue</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="needTransport" name="priorityNeeds" value="Transport / Evacuation">
+                                <label for="needTransport">Transport / Evacuation</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="needsOther">Other needs (specify)</label>
+                        <input type="text" id="needsOther" name="needsOther">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="needsUrgency">Explain the urgency and severity of needs</label>
+                        <textarea id="needsUrgency" name="needsUrgency"></textarea>
+                    </div>
+                </div>
+
+                <!-- Section 6: Health & Safety -->
+                <div class="section">
+                    <h2 class="section-title">
+                        <span class="section-number">6</span>
+                        Health & Safety Assessment
+                    </h2>
+                    
+                    <div class="form-group">
+                        <label>Health risks identified</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="healthDisease" name="healthRisks" value="Disease outbreak risk">
+                                <label for="healthDisease">Disease outbreak risk</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="healthInjuries" name="healthRisks" value="Injuries">
+                                <label for="healthInjuries">Injuries</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="healthChronic" name="healthRisks" value="Chronic illness interruption">
+                                <label for="healthChronic">Chronic illness interruption</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="healthMental" name="healthRisks" value="Mental health distress">
+                                <label for="healthMental">Mental health distress</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="healthDetails">Health risks details</label>
+                        <textarea id="healthDetails" name="healthDetails"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Environmental hazards</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="hazardWater" name="envHazards" value="Standing water">
+                                <label for="hazardWater">Standing water</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="hazardDebris" name="envHazards" value="Debris">
+                                <label for="hazardDebris">Debris</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="hazardMaterials" name="envHazards" value="Hazardous materials">
+                                <label for="hazardMaterials">Hazardous materials</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="hazardCollapse" name="envHazards" value="Structural collapse risk">
+                                <label for="hazardCollapse">Structural collapse risk</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="hazardDetails">Environmental hazards details</label>
+                        <textarea id="hazardDetails" name="hazardDetails"></textarea>
+                    </div>
+                </div>
+
+                <!-- Section 7: Community Resources -->
+                <div class="section">
+                    <h2 class="section-title">
+                        <span class="section-number">7</span>
+                        Community Resources & Capacities
+                    </h2>
+                    
+                    <div class="form-group">
+                        <label>Local authorities / stakeholders engaged</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="authSAPS" name="authorities" value="SAPS">
+                                <label for="authSAPS">SAPS</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="authEMS" name="authorities" value="EMS">
+                                <label for="authEMS">EMS</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="authMunicipality" name="authorities" value="Local Municipality">
+                                <label for="authMunicipality">Local Municipality</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="authLeaders" name="authorities" value="Community Leaders">
+                                <label for="authLeaders">Community Leaders</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="authNGO" name="authorities" value="NGOs / NPOs">
+                                <label for="authNGO">NGOs / NPOs</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="authOther">Other authorities (specify)</label>
+                        <input type="text" id="authOther" name="authOther">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Existing community capacities</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="capVolunteers" name="capacities" value="Volunteers">
+                                <label for="capVolunteers">Volunteers</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="capShelters" name="capacities" value="Community shelters">
+                                <label for="capShelters">Community shelters</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="capTransport" name="capacities" value="Local transport">
+                                <label for="capTransport">Local transport</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="capHealth" name="capacities" value="Local health support">
+                                <label for="capHealth">Local health support</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="capacityDetails">Community capacities details</label>
+                        <textarea id="capacityDetails" name="capacityDetails"></textarea>
+                    </div>
+                </div>
+
+                <!-- Section 8: Response Plan -->
+                <div class="section">
+                    <h2 class="section-title">
+                        <span class="section-number">8</span>
+                        Recommended Response Plan
+                    </h2>
+                    
+                    <div class="form-group">
+                        <label for="immediateRecommendations">Immediate recommendations (0–72 hours)</label>
+                        <textarea id="immediateRecommendations" name="immediateRecommendations"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="shortTermRecommendations">Short-term recommendations (72 hours – 2 weeks)</label>
+                        <textarea id="shortTermRecommendations" name="shortTermRecommendations"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="additionalComments">Additional comments / considerations</label>
+                        <textarea id="additionalComments" name="additionalComments"></textarea>
+                    </div>
+                </div>
+
+                <!-- Section 9: Verification -->
+                <div class="section">
+                    <h2 class="section-title">
+                        <span class="section-number">9</span>
+                        Verification
+                    </h2>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="assessorSignatureName">Assessor Name *</label>
+                            <input type="text" id="assessorSignatureName" name="assessorSignatureName" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="verificationDate">Date *</label>
+                            <input type="date" id="verificationDate" name="verificationDate" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="supervisorName">Supervisor Name (if applicable)</label>
+                            <input type="text" id="supervisorName" name="supervisorName">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="supervisorDate">Supervisor Review Date</label>
+                            <input type="date" id="supervisorDate" name="supervisorDate">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="submit-section">
+                    <button type="button" id="saveDraft" class="btn btn-secondary">Save Draft</button>
+                    <button type="button" id="exportPDF" class="btn btn-secondary">Export as PDF</button>
+                    <button type="submit" class="btn-submit">Submit Assessment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
