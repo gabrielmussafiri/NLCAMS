@@ -355,26 +355,99 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Generate PDF function
     function generatePDF() {
-        // Get the form container
-        const element = document.querySelector('.container');
-        const assessmentDate = document.getElementById('assessmentDate').value || new Date().toISOString().split('T')[0];
+        // Hide buttons and success message for PDF
+        const submitSection = document.querySelector('.submit-section');
+        const successMsg = document.getElementById('successMessage');
+        const originalSubmitDisplay = submitSection ? submitSection.style.display : '';
+        const originalSuccessDisplay = successMsg ? successMsg.style.display : '';
         
-        // Configure PDF options
-        const opt = {
-            margin: [10, 10, 10, 10],
-            filename: `disaster_assessment_${assessmentDate}.pdf`,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        };
+        if (submitSection) submitSection.style.display = 'none';
+        if (successMsg) successMsg.style.display = 'none';
         
-        // Generate and download PDF
-        html2pdf().set(opt).from(element).save().then(() => {
-            showTemporaryMessage('PDF downloaded successfully!', 'success');
-        }).catch((error) => {
-            console.error('PDF generation error:', error);
-            showTemporaryMessage('Error generating PDF. Please try again.', 'error');
-        });
+        // Add PDF mode class to body
+        document.body.classList.add('pdf-mode');
+        
+        // Wait a moment for DOM to update
+        setTimeout(() => {
+            // Get the form container
+            const element = document.querySelector('.container');
+            if (!element) {
+                console.error('Container element not found');
+                restoreUI();
+                return;
+            }
+            
+            const assessmentDate = document.getElementById('assessmentDate')?.value || new Date().toISOString().split('T')[0];
+            
+            // Scroll to top to ensure proper rendering
+            window.scrollTo(0, 0);
+            
+            // Wait a moment for scroll to complete
+            setTimeout(() => {
+                // Configure PDF options - simplified to prevent empty pages
+                const opt = {
+                    margin: [10, 10, 10, 10],
+                    filename: `disaster_assessment_${assessmentDate}.pdf`,
+                    image: { type: 'jpeg', quality: 0.95 },
+                    html2canvas: { 
+                        scale: 1.5,
+                        useCORS: true,
+                        logging: false,
+                        letterRendering: true,
+                        allowTaint: true,
+                        backgroundColor: '#ffffff',
+                        scrollX: 0,
+                        scrollY: 0
+                    },
+                    jsPDF: { 
+                        unit: 'mm', 
+                        format: 'a4', 
+                        orientation: 'portrait',
+                        compress: true
+                    },
+                    pagebreak: { 
+                        mode: ['avoid-all', 'css'],
+                        avoid: ['.section']
+                    }
+                };
+                
+                // Generate PDF with better error handling
+                html2pdf()
+                    .set(opt)
+                    .from(element)
+                    .toPdf()
+                    .get('pdf')
+                    .then(function(pdf) {
+                        // Save the PDF
+                        pdf.save(`disaster_assessment_${assessmentDate}.pdf`);
+                        restoreUI();
+                        showTemporaryMessage('PDF downloaded successfully!', 'success');
+                    })
+                    .catch((error) => {
+                        console.error('PDF generation error:', error);
+                        // Fallback to direct save method
+                        html2pdf().set(opt).from(element).save().then(() => {
+                            restoreUI();
+                            showTemporaryMessage('PDF downloaded successfully!', 'success');
+                        }).catch((err) => {
+                            console.error('Fallback PDF generation error:', err);
+                            restoreUI();
+                            // Final fallback to print dialog
+                            if (confirm('PDF generation failed. Would you like to use the print dialog instead?')) {
+                                window.print();
+                            } else {
+                                showTemporaryMessage('Error generating PDF. Please try again.', 'error');
+                            }
+                        });
+                    });
+            }, 100);
+            
+            function restoreUI() {
+                if (submitSection) submitSection.style.display = originalSubmitDisplay || '';
+                if (successMsg) successMsg.style.display = originalSuccessDisplay;
+                document.body.classList.remove('pdf-mode');
+            }
+        }, 300);
     }
 
     // Add CSS animations

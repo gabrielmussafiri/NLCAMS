@@ -42,6 +42,8 @@ body {
 .ams-logo {
     width: 100px;
     height: 100px;
+    max-width: 100px;
+    object-fit: contain;
 }
 
 .header-text {
@@ -348,10 +350,80 @@ body {
     }
 
     .submit-section {
-        display: none;
+        display: none !important;
     }
 
     .section {
         page-break-inside: avoid;
     }
+}
+
+/* PDF Generation Styles */
+.pdf-mode .submit-section {
+    display: none !important;
+}
+
+.pdf-mode .success-message {
+    display: none !important;
+}
+
+.pdf-mode .container {
+    box-shadow: none;
+    max-width: 100%;
+    overflow: visible;
+}
+
+.pdf-mode body {
+    background: white !important;
+    padding: 0 !important;
+    overflow: visible !important;
+}
+
+.pdf-mode .form-content {
+    padding: 20px !important;
+    overflow: visible !important;
+}
+
+.pdf-mode .section {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    overflow: visible;
+}
+
+.pdf-mode .table-input {
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+.pdf-mode .form-row {
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+.pdf-mode .section-title {
+    page-break-after: avoid;
+    break-after: avoid;
+}
+
+.pdf-mode .checkbox-group {
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+.pdf-mode .form-group {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    margin-bottom: 15px;
+}
+
+/* Prevent empty pages */
+@page {
+    size: A4;
+    margin: 10mm;
+}
+
+.pdf-mode * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
 }
